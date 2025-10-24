@@ -1,0 +1,80 @@
+﻿@page
+@model JustChatWeb.Pages.Slots.IndexModel
+@{
+    ViewData["Title"] = "Доступные психологи";
+}
+
+<h2>Доступные психологи для общения</h2>
+
+@if (!Model.AvailableSlots.Any())
+{
+    <div class="empty-state">
+        <p>😔 Пока нет доступных психологов</p>
+        <a href="/" class="btn btn-primary">Вернуться</a>
+    </div>
+}
+else
+{
+    <div class="slots-grid">
+        @foreach (var slot in Model.AvailableSlots)
+        {
+            <div class="slot-card">
+                <div class="slot-header">
+                    <h3>@slot.VolunteerName</h3>
+                    <div class="slot-meta">
+                        @if (slot.Rating.HasValue)
+                        {
+                            <span class="rating">⭐ @slot.Rating.Value.ToString("0.0")</span>
+                        }
+                        else
+                        {
+                            <span class="rating">Новый волонтер</span>
+                        }
+                        <span class="phone">📞 @slot.VolunteerPhone</span>
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(slot.Category))
+                {
+                    <div class="slot-category">
+                        🏷️ @slot.Category
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(slot.Description))
+                {
+                    <div class="slot-description">
+                        @slot.Description
+                    </div>
+                }
+
+                <div class="slot-time">
+                    🕐 @slot.SlotDateTime.ToString("dd.MM.yyyy HH:mm")
+                </div>
+
+                <form method="post">
+                    <input type="hidden" name="slotId" value="@slot.Id" />
+
+                    <div class="form-group">
+                        <input type="text" name="userName" placeholder="Ваше имя" required class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="tel" name="userPhone" placeholder="Ваш телефон" required class="form-control" />
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Записаться на общение</button>
+                </form>
+
+                <!-- Ссылка на оставление отзыва -->
+                <div class="slot-actions">
+                    <a href="/Reviews/Add?slotId=@slot.Id" class="btn-review">💬 Оставить отзыв</a>
+                    @if (slot.Reviews.Any())
+                    {
+                        <span class="review-count">(@slot.Reviews.Count отзывов)</span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}

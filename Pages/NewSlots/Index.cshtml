@@ -1,0 +1,53 @@
+﻿@page
+@model JustChatWeb.Pages.IndexModel
+@{
+    ViewData["Title"] = "Для психологов";
+}
+
+<div class="hero">
+    <h2>Найдите друга для общения</h2>
+    <p>Простая платформа для кратковременных онлайн-встреч</p>
+</div>
+
+<div class="columns">
+    <div class="column">
+        <h3>👋 Я психолог </h3>
+        <p>Добавьте время, когда вы готовы пообщаться</p>
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="NewSlot.VolunteerName">Ваше имя:</label>
+                <input asp-for="NewSlot.VolunteerName" class="form-control" />
+                <span asp-validation-for="NewSlot.VolunteerName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewSlot.VolunteerPhone">Телефон для связи:</label>
+                <input asp-for="NewSlot.VolunteerPhone" class="form-control" />
+                <span asp-validation-for="NewSlot.VolunteerPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewSlot.Category">Категория общения:</label>
+                <select asp-for="NewSlot.Category" class="form-control">
+                    <option value="">Выберите категорию</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewSlot.Description">Тема общения (необязательно):</label>
+                <textarea asp-for="NewSlot.Description" class="form-control" rows="3"
+                          placeholder="Например: помощь с компьютером, совет по учебе, просто поговорить..."></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewSlot.SlotDateTime">Дата и время:</label>
+                <input asp-for="NewSlot.SlotDateTime" class="form-control" />
+                <span asp-validation-for="NewSlot.SlotDateTime" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Добавить время</button>
+        </form>
+    </div>

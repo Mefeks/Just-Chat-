@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Просто пообщаемся</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Просто пообщаемся</h1>
+            <p>Платформа для общения людей с ОВЗ и психологов</p>
+        </header>
+
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/Slots">Доступные психологи</a>
+            <a href="/NewSlots">Для психологов</a>
+            <a href="/comment">Отзывы</a>
+        </nav>
+
+        <main>
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert success">@TempData["Message"]</div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert error">@TempData["Error"]</div>
+            }
+
+            @RenderBody()
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Просто пообщаемся. Конкурс "Добрые Сайты 2025"</p>
+        </footer>
+    </div>
+</body>
+</html>
